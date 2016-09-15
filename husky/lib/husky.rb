@@ -8,6 +8,9 @@ module Husky
       if env['PATH_INFO'] == '/favicon.ico'
         return [404,
           {'Content-Type' => 'text/html'}, []]
+      elsif env['PATH_INFO'] == '/'
+        return [302,
+          {'Location' => 'https://www.google.com'}, []]
       end
 
       klass, act = get_controller_and_action(env)
