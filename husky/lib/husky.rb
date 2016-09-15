@@ -1,4 +1,5 @@
 require "husky/version"
+require "husky/array"
 
 module Husky
   class Application
