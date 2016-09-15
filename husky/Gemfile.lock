@@ -1,17 +1,24 @@
 PATH
   remote: .
   specs:
-    husky (0.1.0)
+    husky (0.2.0)
       rack
 
 GEM
   remote: https://rubygems.org/
   specs:
+    coderay (1.1.1)
+    method_source (0.8.2)
     minitest (5.9.0)
+    pry (0.10.4)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
     rake (10.5.0)
+    slop (3.6.0)
 
 PLATFORMS
   ruby
@@ -20,6 +27,7 @@ DEPENDENCIES
   bundler (~> 1.11)
   husky!
   minitest (~> 5.0)
+  pry
   rack-test
   rake (~> 10.0)
 
