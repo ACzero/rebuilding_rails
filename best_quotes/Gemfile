@@ -1,2 +1,2 @@
-source :rubygems
-gem 'husky'
+source 'https://rubygems.org/'
+gem 'husky', path: '../husky'
