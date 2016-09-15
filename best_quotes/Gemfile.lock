@@ -1,7 +1,7 @@
 PATH
   remote: ../husky
   specs:
-    husky (0.2.0)
+    husky (0.3.0)
       rack
 
 GEM
