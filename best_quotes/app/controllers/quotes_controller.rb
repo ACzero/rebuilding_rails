@@ -5,4 +5,8 @@ class QuotesController < Husky::Controller
       "but thinking makes it so." +
       %Q[\n#{env_strs.join("\n")}\n]
   end
+
+  def exception
+    raise "It's a bad one!"
+  end
 end

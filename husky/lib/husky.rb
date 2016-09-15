@@ -12,7 +12,13 @@ module Husky
 
       klass, act = get_controller_and_action(env)
       controller = klass.new(env)
-      text = controller.send(act)
+      text = begin
+               controller.send(act)
+             rescue Exception => e
+               msg = e.backtrace.join("\n")
+               "#{__FILE__} #{__LINE__}:#{e.message}" +
+                 "\n#{msg}"
+             end
 
       [200, {'Content-Type' => 'text/html'}, [text]]
     end
