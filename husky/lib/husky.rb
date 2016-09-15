@@ -1,6 +1,6 @@
-require 'pry'
 require "husky/version"
 require "husky/array"
+require "husky/routing"
 
 module Husky
   class Application
