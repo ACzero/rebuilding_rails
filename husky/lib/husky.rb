@@ -1,6 +1,9 @@
 require "husky/version"
 require "husky/array"
 require "husky/routing"
+require "husky/util"
+require "husky/dependencies"
+
 
 module Husky
   class Application

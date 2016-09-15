@@ -1,15 +1,19 @@
-GEM
-  remote: https://rubygems.org/
+PATH
+  remote: ../husky
   specs:
     husky (0.2.0)
       rack
+
+GEM
+  remote: https://rubygems.org/
+  specs:
     rack (2.0.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  husky
+  husky!
 
 BUNDLED WITH
    1.11.2
