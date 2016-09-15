@@ -1,2 +1,6 @@
 source 'https://rubygems.org/'
 gem 'husky', path: '../husky'
+
+group :development do
+  gem 'rerun'
+end
