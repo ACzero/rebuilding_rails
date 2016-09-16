@@ -3,4 +3,5 @@ gem 'husky', path: '../husky'
 
 group :development do
   gem 'rerun'
+  gem 'pry'
 end
