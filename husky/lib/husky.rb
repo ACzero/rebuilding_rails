@@ -29,12 +29,18 @@ module Husky
                  "\n#{msg}"
              end
 
-      if controller.get_response && !err
-        st, hd, rs = controller.get_response.to_a
-        [st, hd, [rs.body].flatten]
-      else
+      if err
         [200,
           {'Content-Type' => 'text/html'}, [text]]
+      else
+        begin
+          controller.get_response || controller.render(act.intern)
+        rescue
+          raise "Template Missing" unless controller.get_response
+        end
+
+        st, hd, rs = controller.get_response.to_a
+        [st, hd, [rs.body].flatten]
       end
     end
   end

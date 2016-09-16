@@ -6,18 +6,15 @@ class QuotesController < Husky::Controller
       %Q[\n#{env_strs.join("\n")}\n]
 
     @test = "instance_variables"
-    render_response :a_quote
   end
 
   def index
     @quotes = FileModel.all
-    render_response :index
   end
 
   def show
     @quote = FileModel.find(params["id"])
     @ua = request.user_agent
-    render_response :quote
   end
 
   def new_quote
@@ -28,7 +25,6 @@ class QuotesController < Husky::Controller
     }
 
     @quote = FileModel.create(attrs)
-    render_response :quote
   end
 
   def update

@@ -11,7 +11,7 @@ module Husky
       self.env = env
     end
 
-    def render(view_name)
+    def render_base(view_name)
       filename = File.join("app", "views", controller_name,
                            "#{view_name}.html.erb")
       template = File.read(filename)
@@ -52,8 +52,8 @@ module Husky
       @response
     end
 
-    def render_response(*args)
-      response(render(*args))
+    def render(*args)
+      response(render_base(*args))
     end
   end
 end
