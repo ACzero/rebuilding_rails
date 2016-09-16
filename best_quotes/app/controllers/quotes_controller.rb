@@ -5,7 +5,8 @@ class QuotesController < Husky::Controller
       "but thinking makes it so." +
       %Q[\n#{env_strs.join("\n")}\n]
 
-    render :a_quote, "@test" => :abc
+    @test = "instance_variables"
+    render :a_quote
   end
 
   def exception
