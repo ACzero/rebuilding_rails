@@ -33,12 +33,9 @@ class QuotesController < Husky::Controller
 
   def update
     if self.env["REQUEST_METHOD"] == "POST"
-      query = self.env['rack.input'].gets
-      id_param = query.split('&').select { |q| q.match(/^id=/) }.first
-      return '' unless id_param
+      quote = FileModel.find(params["id"])
+      return 'not found' unless quote
 
-      id = id_param.match(/^id=(\d*)/)[1]
-      quote = FileModel.find(id)
       quote.submitter = "update submitter"
       quote.save
 
