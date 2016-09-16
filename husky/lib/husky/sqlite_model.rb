@@ -6,6 +6,18 @@ DB = SQLite3::Database.new "test.db"
 module Husky
   module Model
     class SQLite
+      def self.init_accessor
+        schema.keys.each do |key|
+          define_method(key) do
+            @hash[key]
+          end
+
+          define_method("#{key}=") do |value|
+            @hash[key] = value
+          end
+        end
+      end
+
       def self.table
         Husky.to_underscore(name)
       end
