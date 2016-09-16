@@ -57,17 +57,13 @@ module Husky
         DB.execute(sql)[0][0]
       end
 
-      def initialize(data = nil)
-        @hash = data
-      end
-
       def self.find(id)
         sql = <<-SQL
         SELECT #{schema.keys.join(',')} FROM #{table} WHERE id = #{id};
         SQL
 
         row = DB.execute(sql)
-        data = Hash(schema.keys.zip(row[0]))
+        data = Hash[schema.keys.zip(row[0])]
         self.new data
       end
 
@@ -83,12 +79,39 @@ module Husky
         end
       end
 
+      def initialize(data = {})
+        @hash = data
+      end
+
       def [](name)
         @hash[name.to_s]
       end
 
       def []=(name, value)
         @hash[name.to_s] = value
+      end
+
+      def save!
+        unless @hash["id"]
+          self.class.create(@hash)
+          return true
+        end
+
+        fields = @hash.map do |k, v|
+          "#{k}=#{self.class.to_sql(v)}"
+        end.join(',')
+
+        DB.execute <<-SQL
+        UPDATE #{self.class.table}
+        SET #{fields}
+        WHERE id = #{@hash["id"]}
+        SQL
+
+        true
+      end
+
+      def save
+        self.save! rescue false
       end
     end
   end
