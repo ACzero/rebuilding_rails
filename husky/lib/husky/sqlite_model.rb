@@ -51,7 +51,7 @@ module Husky
 
       def self.count
         sql = <<-SQL
-        SELECT COUNT(*) FROM #{table}
+        SELECT COUNT(*) FROM #{table};
         SQL
 
         DB.execute(sql)[0][0]
@@ -59,6 +59,36 @@ module Husky
 
       def initialize(data = nil)
         @hash = data
+      end
+
+      def self.find(id)
+        sql = <<-SQL
+        SELECT #{schema.keys.join(',')} FROM #{table} WHERE id = #{id};
+        SQL
+
+        row = DB.execute(sql)
+        data = Hash(schema.keys.zip(row[0]))
+        self.new data
+      end
+
+      def self.all
+        sql = <<-SQL
+        SELECT #{schema.keys.join(',')} FROM #{table};
+        SQL
+
+        results = DB.execute(sql)
+        results.map do |row|
+          data = Hash[schema.keys.zip(row)]
+          self.new data
+        end
+      end
+
+      def [](name)
+        @hash[name.to_s]
+      end
+
+      def []=(name, value)
+        @hash[name.to_s] = value
       end
     end
   end
