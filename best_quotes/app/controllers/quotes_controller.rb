@@ -9,8 +9,24 @@ class QuotesController < Husky::Controller
     render :a_quote
   end
 
+  def index
+    @quotes = FileModel.all
+    render :index
+  end
+
   def quote_1
-    @quote = Husky::Model::FileModel.find(1)
+    @quote = FileModel.find(1)
+    render :quote
+  end
+
+  def new_quote
+    attrs = {
+      "submitter" => "new user",
+      "quote" => "A picture is worth a thousand pixels",
+      "attribution" => "Me"
+    }
+
+    @quote = FileModel.create(attrs)
     render :quote
   end
 

@@ -1,7 +1,10 @@
 require 'erubis'
+require "husky/file_model"
 
 module Husky
   class Controller
+    include Husky::Model
+
     attr_accessor :env
 
     def initialize(env)
