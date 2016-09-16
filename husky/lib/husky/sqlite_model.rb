@@ -6,18 +6,6 @@ DB = SQLite3::Database.new "test.db"
 module Husky
   module Model
     class SQLite
-      def self.init_accessor
-        schema.keys.each do |key|
-          define_method(key) do
-            @hash[key]
-          end
-
-          define_method("#{key}=") do |value|
-            @hash[key] = value
-          end
-        end
-      end
-
       def self.table
         Husky.to_underscore(name)
       end
@@ -88,6 +76,26 @@ module Husky
         results.map do |row|
           data = Hash[schema.keys.zip(row)]
           self.new data
+        end
+      end
+
+      def method_missing(method, *args)
+        readers = self.class.schema.keys
+        writers = readers.map { |attr| "#{attr}=" }
+
+        if readers.include?(method.to_s)
+          self.class.send(:define_method, method) do
+            @hash[method.to_s]
+          end
+
+          self.public_send(method)
+        elsif writers.include?(method.to_s)
+          self.class.send(:define_method, method) do |value|
+            @hash[method.to_s.gsub(/=/, '')] = value
+          end
+          self.public_send(method, args.first)
+        else
+          super
         end
       end
 
