@@ -1,5 +1,17 @@
 require_relative 'test_helper'
 
+class TestController < Husky::Controller
+  def index
+    "Hello!"
+  end
+end
+
+class TestApp < Husky::Application
+  def get_controller_and_action(env)
+    [TestController, "index"]
+  end
+end
+
 class HuskyTest < Minitest::Test
   include Rack::Test::Methods
 
@@ -8,14 +20,14 @@ class HuskyTest < Minitest::Test
   end
 
   def app
-    Husky::Application.new
+    TestApp.new
   end
 
   def test_request
-    get "/"
+    get "/example/route"
 
     assert last_response.ok?
     body = last_response.body
-    assert body["husky!"]
+    assert body["Hello"]
   end
 end
