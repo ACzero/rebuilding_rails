@@ -3,6 +3,7 @@ require "husky/array"
 require "husky/routing"
 require "husky/util"
 require "husky/dependencies"
+require "husky/controller"
 
 
 module Husky
@@ -27,14 +28,6 @@ module Husky
              end
 
       [200, {'Content-Type' => 'text/html'}, [text]]
-    end
-  end
-
-  class Controller
-    attr_accessor :env
-
-    def initialize(env)
-      self.env = env
     end
   end
 end
