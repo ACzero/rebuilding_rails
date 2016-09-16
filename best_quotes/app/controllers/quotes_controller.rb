@@ -38,7 +38,7 @@ class QuotesController < Husky::Controller
 
       id = id_param.match(/^id=(\d*)/)[1]
       quote = FileModel.find(id)
-      quote["submitter"] = "update submitter"
+      quote.submitter = "update submitter"
       quote.save
 
       'success'
