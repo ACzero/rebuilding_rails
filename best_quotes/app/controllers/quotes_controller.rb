@@ -9,6 +9,11 @@ class QuotesController < Husky::Controller
     render :a_quote
   end
 
+  def quote_1
+    @quote = Husky::Model::FileModel.find(1)
+    render :quote
+  end
+
   def exception
     raise "It's a bad one!"
   end

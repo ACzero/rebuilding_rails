@@ -4,7 +4,7 @@ require "husky/routing"
 require "husky/util"
 require "husky/dependencies"
 require "husky/controller"
-
+require "husky/file_model"
 
 module Husky
   class Application

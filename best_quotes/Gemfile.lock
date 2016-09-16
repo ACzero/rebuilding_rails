@@ -1,8 +1,9 @@
 PATH
   remote: ../husky
   specs:
-    husky (0.4.0)
+    husky (0.5.0)
       erubis
+      multi_json
       rack
 
 GEM
@@ -14,6 +15,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
+    multi_json (1.11.2)
     rack (2.0.1)
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
