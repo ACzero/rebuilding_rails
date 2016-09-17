@@ -58,13 +58,30 @@ end
 #   }
 # end
 
-use Rack::ContentType
-use BenchMarker, 10_000
-run Rack::Lobster.new
+# use Rack::ContentType
+# use BenchMarker, 10_000
+# run Rack::Lobster.new
 
 # run proc {
 #   p "call proc"
 #   [200, {'Content-Type' => 'text/html'}, ["Hello, world"]]
 # }
 
-# run BestQuotes::Application.new
+app = BestQuotes::Application.new
+
+use Rack::ContentType
+
+app.route do
+  match "", "quotes#index"
+  match "sub-app",
+    proc { [200, {}, ["Hello, sub-app"]] }
+
+  # default routes
+  match ":controller/:id/:action"
+  match ":controller/:id",
+    :default => { "action" => "show" }
+  match ":controller",
+    :default => { "action" => "index" }
+end
+
+run app

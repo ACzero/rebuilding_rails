@@ -33,10 +33,10 @@ module Husky
         begin
           self.get_response || self.render(action.intern)
         rescue
-          raise "Template Missing" unless controller.get_response
+          raise "Template Missing" unless self.get_response
         end
 
-        st, hd, rs = controller.get_response.to_a
+        st, hd, rs = self.get_response.to_a
         [st, hd, [rs.body].flatten]
       end
     end
