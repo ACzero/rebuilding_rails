@@ -1,7 +1,7 @@
 PATH
   remote: ../husky
   specs:
-    husky (0.7.0)
+    husky (0.8.0)
       erubis
       multi_json
       rack
