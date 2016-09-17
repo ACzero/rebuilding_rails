@@ -6,9 +6,43 @@ module Husky
     include Husky::Model
 
     attr_accessor :env
+    attr_accessor :routing_params
 
     def initialize(env)
       self.env = env
+      self.routing_params = {}
+    end
+
+    def dispatch(action, routing_params = {})
+      self.routing_params = routing_params
+
+      err = false
+      text = begin
+               self.send(action)
+             rescue Exception => e
+               err = true
+               msg = e.backtrace.join("\n")
+               "#{__FILE__} #{__LINE__}:#{e.message}" +
+                 "\n#{msg}"
+             end
+
+      if err
+        [200,
+          {'Content-Type' => 'text/html'}, [text]]
+      else
+        begin
+          self.get_response || self.render(action.intern)
+        rescue
+          raise "Template Missing" unless controller.get_response
+        end
+
+        st, hd, rs = controller.get_response.to_a
+        [st, hd, [rs.body].flatten]
+      end
+    end
+
+    def self.action(act, rp = {})
+      proc { |e| self.new(e).dispatch(act, rp) }
     end
 
     def render_base(view_name)
@@ -39,7 +73,7 @@ module Husky
     end
 
     def params
-      request.params
+      request.params.merge self.routing_params
     end
 
     def response(text, status = 200, headers = {})

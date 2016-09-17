@@ -18,30 +18,33 @@ module Husky
       end
 
       klass, act = get_controller_and_action(env)
-      controller = klass.new(env)
-      err = false
-      text = begin
-               controller.send(act)
-             rescue Exception => e
-               err = true
-               msg = e.backtrace.join("\n")
-               "#{__FILE__} #{__LINE__}:#{e.message}" +
-                 "\n#{msg}"
-             end
+      rack_app = klass.action(act)
+      rack_app.call(env)
 
-      if err
-        [200,
-          {'Content-Type' => 'text/html'}, [text]]
-      else
-        begin
-          controller.get_response || controller.render(act.intern)
-        rescue
-          raise "Template Missing" unless controller.get_response
-        end
+      # controller = klass.new(env)
+      # err = false
+      # text = begin
+      #          controller.send(act)
+      #        rescue Exception => e
+      #          err = true
+      #          msg = e.backtrace.join("\n")
+      #          "#{__FILE__} #{__LINE__}:#{e.message}" +
+      #            "\n#{msg}"
+      #        end
 
-        st, hd, rs = controller.get_response.to_a
-        [st, hd, [rs.body].flatten]
-      end
+      # if err
+      #   [200,
+      #     {'Content-Type' => 'text/html'}, [text]]
+      # else
+      #   begin
+      #     controller.get_response || controller.render(act.intern)
+      #   rescue
+      #     raise "Template Missing" unless controller.get_response
+      #   end
+
+      #   st, hd, rs = controller.get_response.to_a
+      #   [st, hd, [rs.body].flatten]
+      # end
     end
   end
 end
