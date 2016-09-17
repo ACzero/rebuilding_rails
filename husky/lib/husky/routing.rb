@@ -71,6 +71,10 @@ class RouteObject
     end
     raise "No destination: #{dest.inspect}!"
   end
+
+  def root(dest)
+    match "", dest
+  end
 end
 
 module Husky
