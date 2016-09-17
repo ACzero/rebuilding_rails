@@ -12,14 +12,13 @@ module Husky
       if env['PATH_INFO'] == '/favicon.ico'
         return [404,
           {'Content-Type' => 'text/html'}, []]
-      elsif env['PATH_INFO'] == '/'
-        return [302,
-          {'Location' => 'https://www.google.com'}, []]
       end
 
-      klass, act = get_controller_and_action(env)
-      rack_app = klass.action(act)
-      rack_app.call(env)
+      self.get_rack_app(env).call(env)
+
+      # klass, act = get_controller_and_action(env)
+      # rack_app = klass.action(act)
+      # rack_app.call(env)
 
       # controller = klass.new(env)
       # err = false
