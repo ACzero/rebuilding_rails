@@ -23,7 +23,6 @@ require './config/application'
 
 require "rack/lobster"
 
-use Rack::ContentType
 
 class BenchMarker
   def initialize(app, runs = 100)
@@ -59,12 +58,13 @@ end
 #   }
 # end
 
+use Rack::ContentType
 use BenchMarker, 10_000
-# run Rack::Lobster.new
+run Rack::Lobster.new
 
 # run proc {
 #   p "call proc"
 #   [200, {'Content-Type' => 'text/html'}, ["Hello, world"]]
 # }
 
-run BestQuotes::Application.new
+# run BestQuotes::Application.new
